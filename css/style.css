@@ -1,0 +1,22 @@
+body{
+
+}
+.main-header{
+  padding: 3% 5% 3% 5%;
+  color: #ccc;
+  height: 110px;
+  background-color: #666;
+  border-bottom: solid black 2px;
+}
+#myForm{
+  margin: 30px auto 0px auto;
+}
+#main-title{
+  margin: 150px auto 0px auto;
+}
+.result-table{
+  margin: 5%;
+}
+#searchagain{
+  margin: 50px auto 0px auto;
+}

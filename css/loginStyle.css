@@ -1,0 +1,10 @@
+body{
+  background-color: #eee;
+}
+.frm{
+  border: solid black 1px;
+  margin: 100px auto;
+  width: 25%;
+  background: white;
+  padding: 50px
+}
