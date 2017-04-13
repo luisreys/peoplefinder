@@ -1,4 +1,5 @@
 <?php
+include_once "controller/db.php";
 session_start();
 if(!isset($_SESSION['username'])){
  header("Location:search.php");
@@ -18,7 +19,38 @@ if(!isset($_SESSION['username'])){
 
   </head>
   <body>
-      <p>You've logged</p>
-      <a href="logout.php">Close session.</a>
+      <header>
+        <div class="main-header">
+        <div class="container">
+          <div class="row">
+              <div class="text-left col-md-6">
+                <h2>Welcome <?php echo $_SESSION['username'] ?></h2>
+              </div>
+              <div class="text-right col-md-6">
+                <span><a href="logout.php">Close session.</a></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+        <div class="container">
+            <div class="row">
+              <div class="result-table">
+                <?php show_people(); ?>
+              </div>
+              <hr>
+              <div class="text-center">
+                <h1 id="searchagain">GLOOGE</h1>
+              </div>
+               <div class="text-center" id="myForm">
+                   <form class="form-inline" action="result.php" method="post" >
+                     <div class="form-group">
+                       <input type="text" name="searchbox" value="" class="form-control input">
+                     </div>
+                     <input type="submit" class="btn btn-primary" name="" value="Search">
+                   </form>
+               </div>
+            </div>
+        </div>
   </body>
 </html>

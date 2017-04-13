@@ -4,14 +4,26 @@
     $mysqli = new mysqli("localhost", "root", "", "mvcex");
     if ($mysqli->connect_errno) {
       echo "Error #: " . $mysqli->connect_error;
-      return -1;
+      return null;
     }
     return $mysqli;
   }
 
-  function show_users(){
-    $str = $_POST['searchbox'];
+  /*
+  * This function show ppl by search.
+  * Is the one which can be used for everyone.
+  */
+  function show_ppl_by_search(){
+    if (isset($_POST['searchbox'])) {
+      $str = $_POST['searchbox'];
+    }else {
+      echo '<h2 class="text-center">No results.</h2>';
+      return;
+    }
     $mysqli = connectdb();
+    if ($mysqli == null) {
+      return -4;
+    }
 
     if ($stmt = $mysqli->prepare("SELECT * FROM servside2017_persons WHERE fname=? OR sname=?")) {
       $stmt->bind_param("ss", $str, $str);
@@ -52,6 +64,54 @@
     $mysqli->close();
   }
 
+/*
+* Function which show all the people in the database.
+* It is only for Users.
+*/
+function show_people(){
+  $mysqli = connectdb();
+  if ($mysqli == null) {
+    return -4;
+  }
+
+  if ($stmt = $mysqli->prepare("SELECT * FROM servside2017_persons")) {
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if (!$result->num_rows) {
+      //No hay resultados
+      echo '<h2 class="text-center">Databse is empty.</h2>';
+      $mysqli->close();
+      return;
+    }
+
+    while($row = $result->fetch_array(MYSQLI_ASSOC)){
+      $rows[] = $row;
+    }
+
+    echo '<div id="kryesore" style="overflow-y: scroll; height: 300px;"><table class="table"><thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Lastname</th>
+    </tr>
+  </thead>
+  <tbody>';
+    foreach ($rows as $row){
+      echo "<tr>";
+          foreach ($row as $element){
+              echo "<th>". $element."</th>";
+          }
+      echo "</tr>";
+      }
+      echo "</tbody>
+</table></div>";
+
+  }
+  $result->free();
+  $mysqli->close();
+}
+
   /*
   * From here there are functions for Class methods.
   * First: addPerson, updatePerson and deletePerson
@@ -68,7 +128,7 @@
   */
   function addPersonDB($id, $fname, $sname){
     $mysqli = connectdb();
-    if ($mysqli == -1) {
+    if ($mysqli == null) {
       return -4;
     }
 
@@ -120,7 +180,7 @@
 */
   function updatePersonDB($id, $fname, $sname){
     $mysqli = connectdb();
-    if ($mysqli == -1) {
+    if ($mysqli == null) {
       return -4;
     }
 
@@ -172,7 +232,7 @@
   }
   function deletePersonDB($id){
     $mysqli = connectdb();
-    if ($mysqli == -1) {
+    if ($mysqli == null) {
       return -4;
     }
 

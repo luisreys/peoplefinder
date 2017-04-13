@@ -32,7 +32,7 @@ include_once "controller/db.php";
       <div class="container">
           <div class="row">
             <div class="result-table">
-              <?php show_users(); ?>
+              <?php show_ppl_by_search(); ?>
             </div>
             <hr>
             <div class="text-center">

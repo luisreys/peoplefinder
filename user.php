@@ -26,13 +26,13 @@
     *          -4 - database connect error
     */
     function addPerson($id, $fname, $sname){
-      $ret = addPersonDB($id, $fname, $sname);
+      return addPersonDB($id, $fname, $sname);
     }
     function updatePerson($id, $fname, $sname){
-
+      return updatePersonDB($id, $fname, $sname);
     }
     function deletePerson($id){
-
+      return deletePersonDB($id);
     }
   }
 
@@ -43,9 +43,18 @@
   class admin extends user
   {
 
-    function __construct(argument)
+    function __construct($username, $pri, $id, $description)
     {
-      # code...
+      parent::__construct($username, $pri, $id, $description);
+    }
+    function addUser(){
+
+    }
+    function updateUser(){
+
+    }
+    function deleteUser(){
+      
     }
   }
 
