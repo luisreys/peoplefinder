@@ -21,8 +21,16 @@
       exit;
     }else {
       echo "Login successfully! Welcome " . $username;
+
+      while($row = $result->fetch_array(MYSQLI_ASSOC)){
+        $rows[] = $row;
+      }
+
       session_start();
       $_SESSION["username"] = $username;
+      $_SESSION["pri"] = $rows["pri"];
+      $_SESSION["id"] = $rows["id"];
+      $_SESSION["description"] = $rows["description"];
       header("Location: index.php");
       $stmt->close();
       $mysqli->close();

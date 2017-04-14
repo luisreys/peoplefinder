@@ -1,5 +1,5 @@
 <?php
-  include_once "db.php";
+  include_once "controller/db.php";
   /**
    *  Class User which saves all the information about the user who logged in.
    *  It also give to the user the chance to user some methods only for users.
@@ -54,7 +54,7 @@
 
     }
     function deleteUser(){
-      
+
     }
   }
 

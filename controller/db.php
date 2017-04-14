@@ -89,7 +89,7 @@ function show_people(){
       $rows[] = $row;
     }
 
-    echo '<div id="kryesore" style="overflow-y: scroll; height: 300px;"><table class="table"><thead>
+    echo '<div id="kryesore" style="overflow-y: scroll; height: 200px;"><table class="table"><thead>
     <tr>
       <th>ID</th>
       <th>Name</th>
@@ -255,7 +255,7 @@ function show_people(){
       }else {
         //This id exist in the database, then, I can delete it
 
-        if ($stmt = $mysqli->prepare("DELETE * FROM servside2017_persons WHERE id=?")) {
+        if ($stmt = $mysqli->prepare("DELETE FROM servside2017_persons WHERE id=?")) {
           $stmt->bind_param("i", $id);
           if (!$stmt->execute()) {
             //Something was wrong
