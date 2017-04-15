@@ -154,5 +154,6 @@ if (isset($_POST['delete_form'])) {
                </div>
             </div>
         </div>
+        <hr>
   </body>
 </html>

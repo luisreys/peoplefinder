@@ -220,6 +220,7 @@ function show_people(){
       $mysqli->close();
       return -3;
     }
+  }
 
     /*
     *   Delete a person to the DB.
@@ -229,7 +230,6 @@ function show_people(){
     *          -3 - Error in mysqli->prepare
     *          -4 - database connect error
     */
-  }
   function deletePersonDB($id){
     $mysqli = connectdb();
     if ($mysqli == null) {
@@ -257,6 +257,142 @@ function show_people(){
 
         if ($stmt = $mysqli->prepare("DELETE FROM servside2017_persons WHERE id=?")) {
           $stmt->bind_param("i", $id);
+          if (!$stmt->execute()) {
+            //Something was wrong
+            $mysqli->close();
+            return -2;
+          }else {
+            //Deleted!
+            $mysqli->close();
+            return 0;
+          }
+        }else {
+          //MYSQLI couldn't prepare it
+          $mysqli->close();
+          return -3;
+        }
+      }
+    }else {
+      $mysqli->close();
+      return -3;
+    }
+  }
+
+
+  //User management
+  function addUserDB($user, $password, $pri, $id, $description){
+    $mysqli = connectdb();
+    if ($mysqli == null) {
+      return -4;
+    }
+
+    // First I'm gonna check if this user already exist in the db
+    if ($stmt = $mysqli->prepare("SELECT * FROM servside2017_users WHERE user=?")) {
+      $stmt->bind_param("s", $user);
+      if (!$stmt->execute()) {
+        $mysqli->close();
+        return -2;
+      }
+      $result = $stmt->get_result();
+
+      if (!$result->num_rows ) {
+        // No result, then I can add the new person.
+
+        if ($stmt = $mysqli->prepare("INSERT INTO servside2017_users (user, pwd, pri, id, description) VALUES (?, ?, ?, DEFAULT, ?)")) {
+          $stmt->bind_param("ssis", $user, $password, $pri, $description);
+          if ($stmt->execute()){
+            // Inserted
+            $mysqli->close();
+            return 0;
+          }else {
+            // No inserted
+            $mysqli->close();
+            return -2;
+          }
+        }else {
+          $mysqli->close();
+          return -3;
+        }
+      }else {
+        // This user already exists
+        $mysqli->close();
+        return -1;
+      }
+    }else {
+      $mysqli->close();
+      return -3;
+    }
+  }
+  function updateUserDB($user, $password, $pri, $id, $description){
+    $mysqli = connectdb();
+    if ($mysqli == null) {
+      return -4;
+    }
+
+    // First I'm gonna check if this user exist in the db
+    if ($stmt = $mysqli->prepare("SELECT * FROM servside2017_users WHERE user=?")) {
+      $stmt->bind_param("s", $user);
+      if (!$stmt->execute()) {
+        $mysqli->close();
+        return -2;
+      }
+      $result = $stmt->get_result();
+
+      if (!$result->num_rows ) {
+        // No result, then I can't update it.
+        return -1;
+      }else {
+        // This person exists, then I can update the table.
+        if ($stmt = $mysqli->prepare("UPDATE servside2017_users SET user=?, pwd=?, pri=?, id=?, description=? WHERE user=?")) {
+          $stmt->bind_param("ssiiss", $user, $password, $pri, $id, $description, $user);
+          if ($stmt->execute()){
+            // Updated
+            $mysqli->close();
+            return 0;
+          }else {
+            // No Updated
+            $mysqli->close();
+            return -2;
+          }
+        }else {
+          //Error in prepare sentence
+          $mysqli->close();
+          return -3;
+        }
+      }
+    }else {
+      //Error in prepare sentence
+      $mysqli->close();
+      return -3;
+    }
+  }
+  function deleteUserDB($user){
+    $mysqli = connectdb();
+    if ($mysqli == null) {
+      return -4;
+    }
+
+    /// First I'm gonna check if there are a person with this id, if it does, i can delete it
+    /// otherwise i can't delete anything.
+    if ($stmt = $mysqli->prepare("SELECT * FROM servside2017_users WHERE user=?")) {
+      $stmt->bind_param("s", $user);
+      if (!$stmt->execute()) {
+        //Doesn't work
+        $mysqli->close();
+        return -2;
+      }
+      $result = $stmt->get_result();
+
+      //I'm gonna check if there are some row
+      if (!$result->num_rows) {
+        //This id doesn't exist in the database. Then I can't remove it
+        $mysqli->close();
+        return -1;
+      }else {
+        //This id exist in the database, then, I can delete it
+
+        if ($stmt = $mysqli->prepare("DELETE FROM servside2017_users WHERE user=?")) {
+          $stmt->bind_param("s", $user);
           if (!$stmt->execute()) {
             //Something was wrong
             $mysqli->close();
