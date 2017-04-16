@@ -22,9 +22,10 @@
     }else {
       echo "Login successfully! Welcome " . $username;
 
-      while($row = $result->fetch_array(MYSQLI_ASSOC)){
+      $rows=mysqli_fetch_assoc($result);
+      /*while($row = $result->fetch_array(MYSQLI_ASSOC)){
         $rows[] = $row;
-      }
+      }*/
 
       session_start();
       $_SESSION["username"] = $username;

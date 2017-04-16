@@ -10,8 +10,48 @@ $username = $_SESSION['username'];
 $pri = $_SESSION['pri'];
 $id = $_SESSION['id'];
 $description = $_SESSION['description'];
-$me = new user($username, $pri, $id, $description);
+if ($pri == 0) {
+  $me = new user($username, $pri, $id, $description);
+}else {
+  $me = new admin($username, $pri, $id, $description);
+}
 
+
+if (isset($_POST['delete_form_user'])) {
+  $user = $_POST['user'];
+  $ret = $me->deleteUser($user);
+  if ($ret!=0) {  //Remember to check errors here.
+    echo "Error $ret";
+    exit;
+  }
+}
+if (isset($_POST['edit_form_user'])) {
+  $user = $_POST['user'];
+  $pwd = $_POST['pwd'];
+  $pri = $_POST['pri'];
+  $id = $_POST['id'];
+  $description = $_POST['description'];
+  $ret = $me->updateUser($user, $pwd, $pri, $id, $description);
+  if ($ret!=0) {  //Remember to check errors here.
+    echo "Error $ret";
+    exit;
+  }
+}
+if (isset($_POST['add_form_user'])) {
+  $user = $_POST['user'];
+  $pwd = $_POST['pwd'];
+  $pri = $_POST['pri'];
+  $id = $_POST['id'];
+  $description = $_POST['description'];
+  $ret = $me->addUser($user, $pwd, $pri, $id, $description);
+  if ($ret!=0) {  //Remember to check errors here.
+    echo "Error $ret";
+    exit;
+  }
+}
+/*
+* FOR NORMAL PEOPLE
+*/
 if (isset($_POST['edit_form'])) {
   $id = $_POST['id'];
   $fname = $_POST['fname'];
@@ -152,6 +192,98 @@ if (isset($_POST['delete_form'])) {
                    </form>
                    <br>
                </div>
+               <hr>
+               <?php
+               // 0 User
+               // 1 Admin
+                if ($me->pri == 1) {
+                  echo '<hr>
+                  <h2>Update user:</h2>
+                  <div class="text-left" class="myForm">
+                      <form class="" action="index.php" method="post" >
+                        <div class="form-group col-md-4">
+                          <label for="user">User: </label>
+                          <input type="text" name="user" value="" class="form-control input">
+                        </div>
+                        <div class="form-group col-md-4">
+                          <label for="password">Password: </label>
+                          <input type="password" name="pwd" value="" class="form-control input">
+                        </div>
+                        <div class="form-group col-md-4">
+                          <label for="pri">Priority: </label>
+                          <select class="form-control" id="pri">
+                            <option selected disabled><b>Choose</b></option>
+                            <option value="0">Normal User</option>
+                            <option value="1">Admin</option>
+                          </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                          <label for="id">ID: </label>
+                          <input type="number" name="id" value="" class="form-control input">
+                        </div>
+                        <div class="form-group col-md-4">
+                          <label for="description">Description: </label>
+                          <input type="text" name="description" value="" class="form-control input">
+                        </div>
+                        <input type="hidden" name="edit_form_user"  >
+                        <div class="form-group col-md-4">
+                        <p><br></p>
+                          <input type="submit" class="btn btn-primary form-control" name="" value="Edit">
+                        </div>
+                      </form>
+                      <br>
+                  </div>
+
+                  <h2>Add user:</h2>
+                  <div class="text-left" class="myForm">
+                  <form class="" action="index.php" method="post" >
+                  <div class="form-group col-md-4">
+                    <label for="user">User: </label>
+                    <input type="text" name="user" value="" class="form-control input">
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="password">Password: </label>
+                    <input type="password" name="pwd" value="" class="form-control input">
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="pri">Priority: </label>
+                    <select class="form-control" id="pri" name="pri">
+                      <option selected disabled><b>Choose</b></option>
+                      <option value="0">Normal User</option>
+                      <option value="1">Admin</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="id">ID: </label>
+                    <input type="number" name="id" value="" class="form-control input">
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="description">Description: </label>
+                    <input type="text" name="description" value="" class="form-control input">
+                  </div>
+                  <input type="hidden" name="add_form_user"  >
+                  <div class="form-group col-md-4">
+                  <p><br></p>
+                    <input type="submit" class="btn btn-info form-control" name="" value="Add">
+                  </div>
+                      </form>
+                      <br>
+                  </div>
+                  <h2>Delete user:</h2>
+                  <div class="text-left" class="myForm">
+                      <form class="form-inline" action="index.php" method="post" >
+                        <div class="form-group">
+                          <label for="user">User: </label>
+                          <input type="text" name="user" value="" class="form-control input">
+                        </div>
+                        <input type="hidden" name="delete_form_user">
+                        <input type="submit" class="btn btn-danger" name="" value="Delete">
+                      </form>
+                      <br>
+                  </div>';
+                }
+
+                ?>
             </div>
         </div>
         <hr>

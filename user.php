@@ -47,14 +47,14 @@
     {
       parent::__construct($username, $pri, $id, $description);
     }
-    function addUser(){
-
+    function addUser($user, $password, $pri, $id, $description){
+      return addUserDB($user, $password, $pri, $id, $description);
     }
-    function updateUser(){
-
+    function updateUser($user, $password, $pri, $id, $description){
+      return updateUserDB($user, $password, $pri, $id, $description);
     }
-    function deleteUser(){
-
+    function deleteUser($user){
+      return deleteUserDB($user);
     }
   }
 

@@ -298,8 +298,8 @@ function show_people(){
       if (!$result->num_rows ) {
         // No result, then I can add the new person.
 
-        if ($stmt = $mysqli->prepare("INSERT INTO servside2017_users (user, pwd, pri, id, description) VALUES (?, ?, ?, DEFAULT, ?)")) {
-          $stmt->bind_param("ssis", $user, $password, $pri, $description);
+        if ($stmt = $mysqli->prepare("INSERT INTO servside2017_users (user, pwd, pri, id, description) VALUES (?, ?, ?, ?, ?)")) {
+          $stmt->bind_param("ssiis", $user, $password, $pri, $id, $description);
           if ($stmt->execute()){
             // Inserted
             $mysqli->close();
@@ -307,7 +307,7 @@ function show_people(){
           }else {
             // No inserted
             $mysqli->close();
-            return -2;
+            return -22;
           }
         }else {
           $mysqli->close();
