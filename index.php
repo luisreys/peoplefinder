@@ -1,9 +1,9 @@
 <?php
-include_once "controller/db.php";
-include_once "user.php";
+include_once "model/db.php";
+include_once "controller/user.php";
 session_start();
 if(!isset($_SESSION['username'])){
- header("Location:search.php");
+ header("Location:view/search.php");
 }
 
 $username = $_SESSION['username'];
@@ -204,7 +204,7 @@ if (isset($_POST['delete_form'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title></title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
@@ -218,7 +218,7 @@ if (isset($_POST['delete_form'])) {
                 <h2>Welcome <?php echo $_SESSION['username'] ?></h2>
               </div>
               <div class="text-right col-md-6">
-                <span><a href="logout.php">Close session.</a></span>
+                <span><a href="controller/logout.php">Close session.</a></span>
               </div>
             </div>
           </div>
@@ -335,7 +335,7 @@ if (isset($_POST['delete_form'])) {
                         </div>
                         <div class="form-group col-md-4">
                           <label for="pri">Priority: </label>
-                          <select class="form-control" id="pri" required>
+                          <select class="form-control" id="pri" name="pri" required>
                             <option selected disabled><b>Choose</b></option>
                             <option value="0">Normal User</option>
                             <option value="1">Admin</option>

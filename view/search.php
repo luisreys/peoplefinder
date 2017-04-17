@@ -1,6 +1,3 @@
-<?php
-
- ?>
 
  <!DOCTYPE html>
  <html>
@@ -12,7 +9,7 @@
      <style media="screen">
 
      </style>
-     <link rel="stylesheet" href="css/style.css">
+     <link rel="stylesheet" href="../css/style.css">
    </head>
    <body>
      <header>

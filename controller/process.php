@@ -14,7 +14,7 @@
     $result = $stmt->get_result();
 
     if (!$result->num_rows) {
-      echo 'Username or password is wrong. <a href="login.php">Try again.</a>';
+      echo 'Username or password is wrong. <a href="../view/login.php">Try again.</a>';
 
       $stmt->close();
       $mysqli->close();
@@ -32,7 +32,7 @@
       $_SESSION["pri"] = $rows["pri"];
       $_SESSION["id"] = $rows["id"];
       $_SESSION["description"] = $rows["description"];
-      header("Location: index.php");
+      header("Location: ../index.php");
       $stmt->close();
       $mysqli->close();
       exit;
