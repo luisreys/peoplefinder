@@ -21,7 +21,26 @@ if (isset($_POST['delete_form_user'])) {
   $user = $_POST['user'];
   $ret = $me->deleteUser($user);
   if ($ret!=0) {  //Remember to check errors here.
-    echo "Error $ret";
+    echo "Something was wrong! <br>";
+    echo "Error $ret: ";
+    switch ($ret) {
+      case -1:
+        echo "ID doesn't exist in DB. <br>";
+        break;
+      case -2:
+        echo "Error executing the statement. <br>";
+        break;
+      case -3:
+        echo "Error preparing the SQL. <br>";
+        break;
+      case -3:
+        echo "Internal error with DB. <br>";
+        break;
+      default:
+        # code...
+        break;
+    }
+    echo '<a href="javascript:history.back()">Go Back</a>';
     exit;
   }
 }
@@ -33,7 +52,26 @@ if (isset($_POST['edit_form_user'])) {
   $description = $_POST['description'];
   $ret = $me->updateUser($user, $pwd, $pri, $id, $description);
   if ($ret!=0) {  //Remember to check errors here.
-    echo "Error $ret";
+    echo "Something was wrong! <br>";
+    echo "Error $ret: ";
+    switch ($ret) {
+      case -1:
+        echo "ID doesn't exist in DB. <br>";
+        break;
+      case -2:
+        echo "Error executing the statement. <br>";
+        break;
+      case -3:
+        echo "Error preparing the SQL. <br>";
+        break;
+      case -3:
+        echo "Internal error with DB. <br>";
+        break;
+      default:
+        # code...
+        break;
+    }
+    echo '<a href="javascript:history.back()">Go Back</a>';
     exit;
   }
 }
@@ -45,7 +83,26 @@ if (isset($_POST['add_form_user'])) {
   $description = $_POST['description'];
   $ret = $me->addUser($user, $pwd, $pri, $id, $description);
   if ($ret!=0) {  //Remember to check errors here.
-    echo "Error $ret";
+    echo "Something was wrong! <br>";
+    echo "Error $ret: ";
+    switch ($ret) {
+      case -1:
+        echo "ID doesn't exist in DB. <br>";
+        break;
+      case -2:
+        echo "Error executing the statement. <br>";
+        break;
+      case -3:
+        echo "Error preparing the SQL. <br>";
+        break;
+      case -3:
+        echo "Internal error with DB. <br>";
+        break;
+      default:
+        # code...
+        break;
+    }
+    echo '<a href="javascript:history.back()">Go Back</a>';
     exit;
   }
 }
@@ -58,7 +115,26 @@ if (isset($_POST['edit_form'])) {
   $sname = $_POST['sname'];
   $ret = $me->updatePerson($id, $fname, $sname);
   if ($ret!=0) {  //Remember to check errors here.
-    echo "Error $ret";
+    echo "Something was wrong! <br>";
+    echo "Error $ret: ";
+    switch ($ret) {
+      case -1:
+        echo "ID doesn't exist in DB. <br>";
+        break;
+      case -2:
+        echo "Error executing the statement. <br>";
+        break;
+      case -3:
+        echo "Error preparing the SQL. <br>";
+        break;
+      case -3:
+        echo "Internal error with DB. <br>";
+        break;
+      default:
+        # code...
+        break;
+    }
+    echo '<a href="javascript:history.back()">Go Back</a>';
     exit;
   }
 }
@@ -69,7 +145,26 @@ if (isset($_POST['add_form'])) {
   $sname = $_POST['sname'];
   $ret = $me->addPerson($id, $fname, $sname);
   if ($ret!=0) {  //Remember to check errors here.
-    echo "Error $ret";
+    echo "Something was wrong! <br>";
+    echo "Error $ret: ";
+    switch ($ret) {
+      case -1:
+        echo "ID doesn't exist in DB. <br>";
+        break;
+      case -2:
+        echo "Error executing the statement. <br>";
+        break;
+      case -3:
+        echo "Error preparing the SQL. <br>";
+        break;
+      case -3:
+        echo "Internal error with DB. <br>";
+        break;
+      default:
+        # code...
+        break;
+    }
+    echo '<a href="javascript:history.back()">Go Back</a>';
     exit;
   }
 }
@@ -78,7 +173,26 @@ if (isset($_POST['delete_form'])) {
   $id = $_POST['id'];
   $ret = $me->deletePerson($id);
   if ($ret!=0) {  //Remember to check errors here.
-    echo "Error $ret";
+    echo "Something was wrong! <br>";
+    echo "Error $ret: ";
+    switch ($ret) {
+      case -1:
+        echo "ID doesn't exist in DB. <br>";
+        break;
+      case -2:
+        echo "Error executing the statement. <br>";
+        break;
+      case -3:
+        echo "Error preparing the SQL. <br>";
+        break;
+      case -3:
+        echo "Internal error with DB. <br>";
+        break;
+      default:
+        # code...
+        break;
+    }
+    echo '<a href="javascript:history.back()">Go Back</a>';
     exit;
   }
 }
@@ -131,28 +245,38 @@ if (isset($_POST['delete_form'])) {
               <div class="result-table">
                 <?php
                 if (isset($_POST['searchbox'])) {
+                  echo '<h2>Search</h2>';
                   show_ppl_by_search();
                 }else {
+                  echo '<h2>People list</h2>';
                   show_people();
                 }
                 ?>
               </div>
+              <div class="result-table">
+                <?php
 
+                  if ($_SESSION['pri']) {
+                    echo '<h2>Users list</h2>';
+                    show_users();
+                  }
+                 ?>
+              </div>
                <hr>
                <h2>Update person:</h2>
                <div class="text-left" class="myForm">
                    <form class="form-inline" action="index.php" method="post" >
                      <div class="form-group">
                        <label for="id">ID: </label>
-                       <input type="text" name="id" value="" class="form-control input">
+                       <input type="text" name="id" value="" class="form-control input" required>
                      </div>
                      <div class="form-group">
                        <label for="fname">Name: </label>
-                       <input type="text" name="fname" value="" class="form-control input">
+                       <input type="text" name="fname" value="" class="form-control input" required>
                      </div>
                      <div class="form-group">
                        <label for="sname">Lastname: </label>
-                       <input type="text" name="sname" value="" class="form-control input">
+                       <input type="text" name="sname" value="" class="form-control input" required>
                      </div>
                      <input type="hidden" name="edit_form"  >
                      <input type="submit" class="btn btn-primary" name="" value="Edit">
@@ -165,15 +289,15 @@ if (isset($_POST['delete_form'])) {
                    <form class="form-inline" action="index.php" method="post" >
                      <div class="form-group">
                        <label for="id">ID: </label>
-                       <input type="text" name="id" value="" class="form-control input">
+                       <input type="text" name="id" value="" class="form-control input" required>
                      </div>
                      <div class="form-group">
                        <label for="fname">Name: </label>
-                       <input type="text" name="fname" value="" class="form-control input">
+                       <input type="text" name="fname" value="" class="form-control input" required>
                      </div>
                      <div class="form-group">
                        <label for="sname">Lastname: </label>
-                       <input type="text" name="sname" value="" class="form-control input">
+                       <input type="text" name="sname" value="" class="form-control input" required>
                      </div>
                      <input type="hidden" name="add_form"  >
                      <input type="submit" class="btn btn-info" name="" value="Add">
@@ -185,7 +309,7 @@ if (isset($_POST['delete_form'])) {
                    <form class="form-inline" action="index.php" method="post" >
                      <div class="form-group">
                        <label for="id">ID: </label>
-                       <input type="text" name="id" value="" class="form-control input">
+                       <input type="text" name="id" value="" class="form-control input" required>
                      </div>
                      <input type="hidden" name="delete_form"  >
                      <input type="submit" class="btn btn-danger" name="" value="Delete">
@@ -203,15 +327,15 @@ if (isset($_POST['delete_form'])) {
                       <form class="" action="index.php" method="post" >
                         <div class="form-group col-md-4">
                           <label for="user">User: </label>
-                          <input type="text" name="user" value="" class="form-control input">
+                          <input type="text" name="user" value="" class="form-control input" required>
                         </div>
                         <div class="form-group col-md-4">
                           <label for="password">Password: </label>
-                          <input type="password" name="pwd" value="" class="form-control input">
+                          <input type="password" name="pwd" value="" class="form-control input" required>
                         </div>
                         <div class="form-group col-md-4">
                           <label for="pri">Priority: </label>
-                          <select class="form-control" id="pri">
+                          <select class="form-control" id="pri" required>
                             <option selected disabled><b>Choose</b></option>
                             <option value="0">Normal User</option>
                             <option value="1">Admin</option>
@@ -219,11 +343,11 @@ if (isset($_POST['delete_form'])) {
                         </div>
                         <div class="form-group col-md-4">
                           <label for="id">ID: </label>
-                          <input type="number" name="id" value="" class="form-control input">
+                          <input type="number" name="id" value="" class="form-control input" required>
                         </div>
                         <div class="form-group col-md-4">
                           <label for="description">Description: </label>
-                          <input type="text" name="description" value="" class="form-control input">
+                          <input type="text" name="description" value="" class="form-control input" required>
                         </div>
                         <input type="hidden" name="edit_form_user"  >
                         <div class="form-group col-md-4">
@@ -239,15 +363,15 @@ if (isset($_POST['delete_form'])) {
                   <form class="" action="index.php" method="post" >
                   <div class="form-group col-md-4">
                     <label for="user">User: </label>
-                    <input type="text" name="user" value="" class="form-control input">
+                    <input type="text" name="user" value="" class="form-control input" required>
                   </div>
                   <div class="form-group col-md-4">
                     <label for="password">Password: </label>
-                    <input type="password" name="pwd" value="" class="form-control input">
+                    <input type="password" name="pwd" value="" class="form-control input" required>
                   </div>
                   <div class="form-group col-md-4">
                     <label for="pri">Priority: </label>
-                    <select class="form-control" id="pri" name="pri">
+                    <select class="form-control" id="pri" name="pri" required>
                       <option selected disabled><b>Choose</b></option>
                       <option value="0">Normal User</option>
                       <option value="1">Admin</option>
@@ -255,11 +379,11 @@ if (isset($_POST['delete_form'])) {
                   </div>
                   <div class="form-group col-md-4">
                     <label for="id">ID: </label>
-                    <input type="number" name="id" value="" class="form-control input">
+                    <input type="number" name="id" value="" class="form-control input" required>
                   </div>
                   <div class="form-group col-md-4">
                     <label for="description">Description: </label>
-                    <input type="text" name="description" value="" class="form-control input">
+                    <input type="text" name="description" value="" class="form-control input" required>
                   </div>
                   <input type="hidden" name="add_form_user"  >
                   <div class="form-group col-md-4">
@@ -274,7 +398,7 @@ if (isset($_POST['delete_form'])) {
                       <form class="form-inline" action="index.php" method="post" >
                         <div class="form-group">
                           <label for="user">User: </label>
-                          <input type="text" name="user" value="" class="form-control input">
+                          <input type="text" name="user" value="" class="form-control input" required>
                         </div>
                         <input type="hidden" name="delete_form_user">
                         <input type="submit" class="btn btn-danger" name="" value="Delete">

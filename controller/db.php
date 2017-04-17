@@ -52,7 +52,7 @@
       foreach ($rows as $row){
         echo "<tr>";
             foreach ($row as $element){
-                echo "<th>". $element."</th>";
+                echo "<td>". $element."</td>";
             }
         echo "</tr>";
         }
@@ -100,8 +100,60 @@ function show_people(){
     foreach ($rows as $row){
       echo "<tr>";
           foreach ($row as $element){
-              echo "<th>". $element."</th>";
+              echo "<td>". $element."</td>";
           }
+      echo "</tr>";
+      }
+      echo "</tbody>
+</table></div>";
+
+  }
+  $result->free();
+  $mysqli->close();
+}
+
+/*
+* Show users
+* This is only avalible for Admin users
+*/
+
+function show_users(){
+  $mysqli = connectdb();
+  if ($mysqli == null) {
+    return -4;
+  }
+
+  if ($stmt = $mysqli->prepare("SELECT * FROM servside2017_users")) {
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if (!$result->num_rows) {
+      //No hay resultados
+      echo '<h2 class="text-center">Databse is empty.</h2>';
+      $mysqli->close();
+      return;
+    }
+
+    while($row = $result->fetch_array(MYSQLI_ASSOC)){
+      $rows[] = $row;
+    }
+    //$row=mysqli_fetch_assoc($result);
+
+    echo '<div id="kryesore" style="overflow-y: scroll; height: 200px;"><table class="table"><thead>
+    <tr>
+      <th>User</th>
+      <th>Priority</th>
+      <th>ID</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>';
+    foreach ($rows as $row){
+      echo "<tr>";
+          /*foreach ($row as $element){
+              echo "<td>". $element."</td>";
+          }*/
+          echo "<td>" . $row['user'] . "</td><td>" . $row['pri'] . "</td><td>" . $row['id'] . "</td><td>" . $row['description'] . "</td>";
       echo "</tr>";
       }
       echo "</tbody>
